@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎使用成绩管理系统</title>
+    <style type="text/css">
+        body{
+            background-image:url("/static/loginbg3.jpg");
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .inputarea1{
+            boder:0px;
+            right: 5%;
+            top: 20%;
+            position: absolute;
+            height: 300px;
+            width: 300px;
+        }
+         .choose_kind_of_identify{
+            border: 0px;
+            height: 20%;
+            width: 100%;
+
+
+        }
+        .inputarea2{
+            border: 0px;
+            height: 60%;
+            width: 100%;
+            position: absolute;
+            top:30%;
+
+
+        }
+        .inputuserid{
+            border: 0px;
+            height: 40%;
+            width: 100%;
+            position: absolute;
+
+
+        }
+        .inputuserpassword{
+            border: 0px;
+            height: 40%;
+            width: 100%;
+            position: absolute;
+            top:20%;
+
+
+        }
+        .gotomyhome{
+            border: 0px;
+            height: 20%;
+            width: 95%;
+            position: absolute;
+            top: 70%;
+
+        }
+        .loginsize{
+            height: 30px;
+            width: 80%;
+        }
+    </style>
+</head>
+<body >
+<div>
+<div class="inputarea1" >
+
+    <form action=" {{ url_for('fun_login') }} " method="post"><!--!!!!!!!!!!!!!!!!!未完成-->
+
+<!--choose_kind_of_identify!-->
+
+<br><br><br>
+<div class="choose_kind_of_identify">
+    <input name="kind" type="radio" value="student" style="font-size: 20px">学生&nbsp
+    <input name="kind" type="radio" value="teacher" >教师&nbsp
+    <input name="kind" type="radio" value="root" >管理员
+</div>
+
+
+
+<!--inputarea-->
+
+<div class="inputarea2">
+    <div class="inputuserid">
+        <p style="font-size: 20px">学号
+            <input type="text" name="username" size="20%" >
+        </p>
+    </div>
+
+
+    <div class="inputuserpassword">
+        <p style="font-size: 20px">密码
+            <input type="password" name="password" size="20%">
+        </p>
+    </div>
+</div>
+
+<!--gotomyhome-->
+
+<div class="gotomyhome">
+    <input type="submit" class="loginsize" value="登录" style="font-size: 20px;background: #F2F5A9;" >
+</div>
+</form>
+</div>
+</div>
+</body>
+</html>
