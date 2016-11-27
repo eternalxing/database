@@ -92,9 +92,29 @@ def adduser():
     return "success"
 
 
-@app.route('/test', methods=['get'])
+@app.route('/changescore', methods=['get'])
 def test():
-    return
+    coon = pymysql.connect(**config)
+    cur = coon.cursor()
+    sql = "SELECT *  FROM score_201602 "
+    cur.execute(sql)
+    coon.commit()
+    result = cur.fetchall()
+    cur.close()
+    coon.close()
+    print  result
+    scores = []
+    for i in result:
+        tmp = {}
+        tmp['id'] = i[0]
+        tmp['name'] = i[1]
+        tmp['Database'] = i[2]
+        tmp['Math'] = i[3]
+        tmp['Java'] = i[4]
+        tmp['Linux'] = i[5]
+        scores.append(tmp)
+    print scores
+    return render_template('teacher_seescore.html', scores=scores)
 
 
 if __name__ == '__main__':
