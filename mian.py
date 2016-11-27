@@ -84,13 +84,28 @@ def adduse_html():
     return render_template('root_adduser.html')
 
 
-@app.route('/add', methods=['post'])
-def adduser():
-    username = request.form.get('username')
+@app.route('/doadduser', methods=['get', 'post'])
+def doadduser():
     name = request.form.get('name')
+    username = request.form.get('username')
     password = request.form.get('password')
-    print username, name, password
-    return "success"
+    identify = request.form.get('identify')
+    idcard = request.form.get('idcard')
+    print name, username, password, identify, idcard
+
+    coon = pymysql.connect(**config)
+    cur = coon.cursor()
+    sql = "INSERT INTO   account (username ,password, realname ,identify) VALUES (%s,%s,%s,%s)"
+
+    print sql % (username, password, name, identify)
+
+    cur.execute(sql, (username, password, name, identify))
+    coon.commit()
+    #  result = cur.fetchone()
+    cur.close()
+    coon.close()
+
+    return "添加成功"
 
 
 @app.route('/changescore', methods=['get'])
@@ -123,22 +138,18 @@ def test1(id):
     coon = pymysql.connect(**config)
     cur = coon.cursor()
     sql = "SELECT * from score_201602 WHERE  id= %s"
-
     cur.execute(sql, (id))
     coon.commit()
     result = cur.fetchone()
     cur.close()
     coon.close()
-
-    stu = {
-    }
+    stu = {}
     stu["id"] = result[0]
     stu["name"] = result[1]
     stu["Dbbase"] = result[2]
     stu["Math"] = result[3]
     stu["Java"] = result[4]
     stu["Linux"] = result[5]
-
     return render_template('teacher_changescore_each.html', student=stu)
 
 
@@ -149,7 +160,6 @@ def changescore(id):
     Linux = request.form.get("Linux")
     Java = request.form.get("Java")
     print Math, Dbbase, Linux, Java
-
     coon = pymysql.connect(**config)
     cur = coon.cursor()
     sql = "UPDATE  score_201602 SET  Math=%s , Java=%s  ,Linux=%s , Dbbase=%s WHERE  id=%s"
@@ -158,8 +168,19 @@ def changescore(id):
     coon.commit()
     cur.close()
     coon.close()
-
     return "changed success"
+
+
+@app.route('/delete/<int:id>', methods=['get'])
+def delete(id):
+    coon = pymysql.connect(**config)
+    cur = coon.cursor()
+    sql = "DELETE FROM score_201602 WHERE id=%s"
+    cur.execute(sql, (str(id)))
+    coon.commit()
+    cur.close()
+    coon.close()
+    return "delete successfully"
 
 
 if __name__ == '__main__':
