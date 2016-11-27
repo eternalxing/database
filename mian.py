@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, render_template, session, request
 from databaseconfig import config
 import pymysql
@@ -108,7 +109,7 @@ def test():
         tmp = {}
         tmp['id'] = i[0]
         tmp['name'] = i[1]
-        tmp['Database'] = i[2]
+        tmp['Dbbase'] = i[2]
         tmp['Math'] = i[3]
         tmp['Java'] = i[4]
         tmp['Linux'] = i[5]
@@ -117,5 +118,49 @@ def test():
     return render_template('teacher_seescore.html', scores=scores)
 
 
+@app.route('/test/<int:id>')
+def test1(id):
+    coon = pymysql.connect(**config)
+    cur = coon.cursor()
+    sql = "SELECT * from score_201602 WHERE  id= %s"
+
+    cur.execute(sql, (id))
+    coon.commit()
+    result = cur.fetchone()
+    cur.close()
+    coon.close()
+
+    stu = {
+    }
+    stu["id"] = result[0]
+    stu["name"] = result[1]
+    stu["Dbbase"] = result[2]
+    stu["Math"] = result[3]
+    stu["Java"] = result[4]
+    stu["Linux"] = result[5]
+
+    return render_template('teacher_changescore_each.html', student=stu)
+
+
+@app.route('/changescore/<int:id>', methods=['post'])
+def changescore(id):
+    Math = request.form.get("Math")
+    Dbbase = request.form.get("Dbbase")
+    Linux = request.form.get("Linux")
+    Java = request.form.get("Java")
+    print Math, Dbbase, Linux, Java
+
+    coon = pymysql.connect(**config)
+    cur = coon.cursor()
+    sql = "UPDATE  score_201602 SET  Math=%s , Java=%s  ,Linux=%s , Dbbase=%s WHERE  id=%s"
+    print sql % (Math, Java, Linux, Dbbase, str(id))
+    cur.execute(sql, (Math, Java, Linux, Dbbase, str(id)))
+    coon.commit()
+    cur.close()
+    coon.close()
+
+    return "changed success"
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
