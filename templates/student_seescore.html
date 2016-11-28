@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css">
+        .goback {
+            height: 10%;
+            width: 20%;
+            position: absolute;
+            left: 10%;
+            top: 10%;
+        }
+
+        .informationarea {
+            height: 500px;
+            width: 800px;
+            position: absolute;
+            left: 10%;
+            top: 25%;
+        }
+
+        .btn-style-1 {
+            height: 40px;
+            width: 70px;
+            position: absolute;
+            left: 30%;
+            top: 90%;
+
+            border: solid 0px #ffffff;
+            font-size: 15px;
+            color: #d1ff6e;
+            padding: 7px 17px;
+            background: #053494;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #053494), color-stop(100%, #addbff));
+            background: -moz-linear-gradient(top, #053494 0%, #addbff 100%);
+            background: -webkit-linear-gradient(top, #053494 0%, #addbff 100%);
+            background: -o-linear-gradient(top, #053494 0%, #addbff 100%);
+            background: -ms-linear-gradient(top, #053494 0%, #addbff 100%);
+            background: linear-gradient(top, #053494 0%, #addbff 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#053494', endColorstr='#addbff', GradientType=0);
+
+        }
+
+        .btn-style-2 {
+            height: 40px;
+            width: 70px;
+            position: absolute;
+            left: 72%;
+            bottom: 0;
+
+            border: solid 0px #ffffff;
+            font-size: 15px;
+            color: #d1ff6e;
+            padding: 7px 17px;
+            background: #053494;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #053494), color-stop(100%, #addbff));
+            background: -moz-linear-gradient(top, #053494 0%, #addbff 100%);
+            background: -webkit-linear-gradient(top, #053494 0%, #addbff 100%);
+            background: -o-linear-gradient(top, #053494 0%, #addbff 100%);
+            background: -ms-linear-gradient(top, #053494 0%, #addbff 100%);
+            background: linear-gradient(top, #053494 0%, #addbff 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#053494', endColorstr='#addbff', GradientType=0);
+
+        }
+    </style>
+</head>
+<body>
+<div class="goback">
+    <a href="../static/teacher_find.html"><img src="goback.png"></a>
+</div>
+
+
+<form action="..." method="post">
+    <div class="informationarea">
+        <table width="500" height="150" border="1" align="center">
+            <tr align="center">
+                <th>姓名</th>
+                <th>学号</th>
+                <th>Dbbase</th>
+                <th>Math</th>
+                <th>Java</th>
+                <th>Linux</th>
+
+
+            </tr>
+
+                <tr align="center">
+                <td>{{ score.name }}</td>
+                <td>{{ score.id }}</td>
+                <td>{{ score.Dbbase }}</td>
+                <td>{{ score.Math }}</td>
+                <td>{{ score.Java }}</td>
+                <td>{{ score.Linux }}</td>
+
+
+
+
+
+        </table>
+
+    </div>
+</form>
+
+</body>
+</html>

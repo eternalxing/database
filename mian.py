@@ -23,6 +23,7 @@ def fun_login():
     password = request.form.get('password')
     print username, password
     session['username'] = username
+    session['id']=3
     coon = pymysql.connect(**config)
     cur = coon.cursor()
     sql = "SELECT * from account WHERE  username= %s"
@@ -54,7 +55,7 @@ def changepassword():
     newpassword = request.form.get('newpassword')
     oldpassword = request.form.get('oldpassword')
 
-    print  newpassword
+    print newpassword
     print oldpassword
     coon = pymysql.connect(**config)
     cur = coon.cursor()
@@ -182,6 +183,32 @@ def delete(id):
     coon.close()
     return "delete successfully"
 
+
+@app.route('/student_seescore', methods=['get'])
+def test2():
+    coon = pymysql.connect(**config)
+    cur = coon.cursor()
+    id=session['id']
+    sql = "SELECT *  FROM score_201602 WHERE id=%s"
+    cur.execute(sql,(str(id)))
+    coon.commit()
+    i = cur.fetchone()
+    cur.close()
+    coon.close()
+    print  i
+    tmp ={}
+
+
+    tmp['id'] = i[0]
+    tmp['name'] = i[1]
+    tmp['Dbbase'] = i[2]
+    tmp['Math'] = i[3]
+    tmp['Java'] = i[4]
+    tmp['Linux'] = i[5]
+
+
+
+    return render_template('student_seescore.html', score=tmp)
 
 if __name__ == '__main__':
     app.run(debug=True)
