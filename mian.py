@@ -23,7 +23,7 @@ def fun_login():
     password = request.form.get('password')
     print username, password
     session['username'] = username
-    session['id']=3
+    session['id'] = 3
     coon = pymysql.connect(**config)
     cur = coon.cursor()
     sql = "SELECT * from account WHERE  username= %s"
@@ -35,8 +35,13 @@ def fun_login():
 
     if result[2] == password:
         session['username'] = username
-        session['idenfity'] = result[4]
-        return render_template('teacher.html')
+        session['identify'] = result[4]
+        if session['idetify'] == 1:
+            return render_template('student.html')
+        if session['idetify'] == 2:
+            return render_template('teacher.html')
+        if session['idetify'] == 3:
+            return render_template('root.html')
     else:
         return render_template('login.html')
 
@@ -188,16 +193,15 @@ def delete(id):
 def test2():
     coon = pymysql.connect(**config)
     cur = coon.cursor()
-    id=session['id']
+    id = session['id']
     sql = "SELECT *  FROM score_201602 WHERE id=%s"
-    cur.execute(sql,(str(id)))
+    cur.execute(sql, (str(id)))
     coon.commit()
     i = cur.fetchone()
     cur.close()
     coon.close()
     print  i
-    tmp ={}
-
+    tmp = {}
 
     tmp['id'] = i[0]
     tmp['name'] = i[1]
@@ -206,9 +210,31 @@ def test2():
     tmp['Java'] = i[4]
     tmp['Linux'] = i[5]
 
-
-
     return render_template('student_seescore.html', score=tmp)
+
+@app.route('/usermanager',methods=['get'])
+def usermanager():
+    coon = pymysql.connect(**config)
+    cur = coon.cursor()
+    id = session['id']
+    sql = "SELECT *  FROM account "
+    cur.execute(sql)
+    coon.commit()
+    result = cur.fetchall()
+    cur.close()
+    coon.close()
+    print  result
+    scores = []
+    for i in result:
+        tmp = {}
+        tmp['id'] = i[0]
+        tmp['name'] = i[1]
+        tmp['password'] = i[2]
+        tmp['identify'] = i[4]
+
+        scores.append(tmp)
+        print scores
+    return render_template('root_usermanger.html', scores=scores)
 
 if __name__ == '__main__':
     app.run(debug=True)
